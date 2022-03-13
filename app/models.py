@@ -17,7 +17,7 @@ class User(db.Model, UserMixin):
     pass_secure = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
-    pitches = db.relationship('Blog', backref='user', lazy='dynamic')
+    blogs = db.relationship('Blog', backref='user', lazy='dynamic')
     comment = db.relationship('Comment', backref='user', lazy='dynamic')
 
     @property
@@ -72,3 +72,22 @@ class Subscribe(db.Model):
 
     def __repr__(self):
         return f'subscribe:{self.email}'
+
+class Comment(db.Model):
+    __tablename__= 'comments'
+    id = db.Column(db.Integer, primary_key = True)
+    comment = db.Column(db.Text(), nullable = False )
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
+    blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'), nullable = False)
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_comments(cls, blog_id):
+        comments = Comment.query.filter_by(blog_id = blog_id).all()
+        return comments
+
+    def __repr__(self):
+        return f'comment:{self.comment}'

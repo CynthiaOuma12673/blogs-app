@@ -17,6 +17,7 @@ def index():
     blogs = Blog.query.all()
     quotes = get_quotes()
     form = SubscribeForm()
+
     if form.validate_on_submit():
         email = form.email.data
 

@@ -2,8 +2,8 @@ import os
 
 class Config:
 
-    SECRET_KEY = '12673'
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:Cyn12673#@localhost/blogs'
+    SECRET_KEY =("12673")
+    SQLALCHEMY_DATABASE_URI =  'postgresql+psycopg2://moringa:Cyn12673#@localhost/blogs'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOADED_PHOTOS_DEST ='app/static/photos'
     
@@ -13,8 +13,8 @@ class Config:
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = 'appscynthia7@gmail.com'
-    MAIL_PASSWORD ='Cyn12673#'
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD =os.environ.get("MAIL_PASSWORD")
     SIMPLEMDE_JS_IIFE = True
     SIMPLEMDE_USE_CDN = True
 

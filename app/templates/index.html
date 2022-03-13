@@ -1,0 +1,79 @@
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% import 'macros.html' as macro%}
+<!-- Styles block -->
+{% block styles%}
+{{ super() }}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+{% endblock %}
+<!-- Content block -->
+{% block content %}
+<div class="container-fluid">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+</div>
+    {% endfor %}
+
+    <a class="btn btn-info btn-sm" href="{{url_for('main.new_blog')}}">ADD NEW BLOG</a>
+    <div class="row posts">
+        {% for blog in blogs %}
+        <article class="media">
+            {% if blog.user.profile_pic_path %}
+            <img class="rounded-circle blog-profile" src="{{url_for('static',filename=blog.user.profile_pic_path)}}" alt="">
+            {% else %}
+            <img class="rounded-circle blog-profile" src="{{url_for('static', filename='photos/default.png')}}" alt="">
+            {% endif %} 
+            <div class="media-body">
+                <div class="details">
+                    <p>Posted By: {{blog.user.username}}</p>
+                    <small>Posted On: {{blog.time.strftime('%Y-%m-%d')}}</small>
+                    {% if blog.user == current_user %}
+                    <span>
+                        <a href="{{url_for('main.update_blog', blog_id = blog_id)}}">Update Blog</a>
+                        <button class="btn btn-danger btn-sm m-1" >Delete</button>
+                    </span>
+                    {% endif %}
+                    <h4>{{ blog.title }}</h4>
+                <p>{{ blog.post }}</p>
+                <a href="{{url_for('main.comment',blog_id = blog_id)}}"><span><button>{{blog.comment.count}}</button></span>Comments</a>
+                </div>
+            </div>              
+        </article>
+        <div class="modal fade deleteModal-modal-sm" id="" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title" id="deleteModalLabel">Are you sure you want to delete this blog?</p>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form action="{{ url_for('main.delete_post', pitch_id = pitch.id) }}" method="POST">
+                <input class="btn btn-danger btn-sm" type="submit" value="Delete">
+            </form>
+            </div>
+            </div>
+        </div>
+        </div>
+    </article>
+        {% endfor %}
+    </div>
+    <div class="col-md-3">
+        <h5>Daily Quotes</h5>
+        <p>{{ quotes.quote }}</p>
+        <p>By: {{quotes.author}}</p>
+        <div class="">
+        {{wtf.quick_form(form ,button_map={'submit':'info btn-sm'})}}
+        </div>
+    </div>
+    <footer class="fixed-bottom">
+        <p class="text-center text-white"><i>@Copyright, BlogApp 2022/i></p>
+    </footer>
+    {% endblock%}
