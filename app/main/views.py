@@ -132,8 +132,10 @@ def update_blog(blog_id):
 @main.route('/latest', methods = ['POST','GET'])
 def latest_blog():
     blogs = Blog.query.order_by(Blog.time.desc()).all()
+    quotes = get_quotes()
+    form = SubscribeForm()
 
-    return render_template('latest.html', blogs = blogs)
+    return render_template('latest.html', blogs = blogs, quotes = quotes, form = form)
 
 
 

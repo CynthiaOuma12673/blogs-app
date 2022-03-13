@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="head">
+                <a class="navbar-brand" href="/" style="font-size: 40px;"> BLOGS APP </a>
+                <ul class="list_unstyle">
+                    <li class="nav-item active"><a class="nav-link main" href="/">Blogs</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{url_for('main.latest_blog')}}">Latest</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{url_for('main.new_blog')}}">Add Blog</a></li>
+                    <!-- add link to direct us to the profile page -->
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a> <span><i class="fas fa-user"></i></span> {{current_user.username}}</li>
+                    <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
+                    {% else %}
+                    <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
+                    {%endif%}
+                </ul>
+                    </div> 
+        </div>
+
+        </div>
+    </div>
+
+
