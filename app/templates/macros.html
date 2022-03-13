@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+{% macro display(blogs) %}
+
+<div class="container-fluid">
+    {% if blogs %}
+    {% for blog in blogs %}
+    <article class="media">
+        <div class="media-body">
+            <div class="details">
+                <small class="time">
+                    Created On: {{blog.time.strftime('%Y-%m-%d')}}
+                </small>
+                {% if user == current_user %}
+                <span>
+                    <a href="{{url_for('main.update_blog',blog_id = blog_id)}}">Update Blog</a>
+                    <button class="btn btn-danger btn-sm m-1" >Delete</button>
+                </span>
+                {% endif %}
+                <h4>{{ blog.title }}</h4>
+                <p>{{ blog.post }}</p>
+                <a href="{{url_for('main.comment',blog_id = blog_id)}}"><span><button>{{blog.comment.count}}</button></span>Comments</a>
+            </div>
+        </div>
+    </article>
+    <div class="modal fade deleteModal-modal-sm" id="" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <p class="modal-title" id="deleteModalLabel">Are you sure you want to delete this blog?</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action="{{ url_for('main.delete_post', pitch_id = pitch.id) }}" method="POST">
+            <input class="btn btn-danger btn-sm" type="submit" value="Delete">
+        </form>
+        </div>
+        </div>
+    </div>
+    </div>
+</article>
+    {% endfor %}
+    {% else %}
+    <div class="card">
+    <div class="card-body">
+
+        <p class="card-title">No blogs posted here</p>
+    </div>
+</div>
+{% endif %}
+</div>
+{% endmacro %}
