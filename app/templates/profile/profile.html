@@ -1,0 +1,51 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+{% block styles%}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Profile</h4>
+            <div class="media">
+            </div>
+            <div class="media-body">
+                <h5>{{ current_user.username }}</h5>
+                <p>{{ current_user.email }}</p>
+                {% if user.bio %}
+                <p> {{user.bio}}</p>
+                {%else%}
+                <p> {{user.username}} does not have a bio </p>
+                {% endif %}
+                {% if user == current_user %}
+                <a href="{{url_for('main.update_profile',uname=user.username)}}">Click Here to Update Bio</a>
+                <form class="mt-4" action="{{url_for('main.update_pic',uname=user.username)}}" method="post"
+                    enctype="multipart/form-data">
+                    <p class="title ">Update Profile photo</p>
+                    <input type="file" name="photo" class="form-control" required><br>
+                    <input type="submit" class="btn btn-sm btn-info" value="Update">
+                </form>
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                    <h4>My Blogs</h4>
+                    {% if user == current_user %}
+            {%if posts%}
+                {{ macro.display(posts) }}
+            {%else%}
+            <div class="content-section">
+                You have no blogs 
+            </div>
+            {% endif %}
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="fixed-bottom">
+    <p class="text-center">Copyright, BlogApp 2022</p>
+</footer>
+{% endblock %}

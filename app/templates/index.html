@@ -10,7 +10,9 @@
 {% endblock %}
 <!-- Content block -->
 {% block content %}
-<div class="container-fluid">
+<div class="container">
+    <div class="row">
+    <div class="col-md-9">
     {% for message in get_flashed_messages() %}
     <div class="alert alert-info">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -65,6 +67,7 @@
     </article>
         {% endfor %}
     </div>
+</div>
     <div class="col-md-3">
         <h5>Daily Quotes</h5>
         <p>{{ quotes.quote }}</p>
@@ -73,7 +76,9 @@
         {{wtf.quick_form(form ,button_map={'submit':'info btn-sm'})}}
         </div>
     </div>
+</div>
     <footer class="fixed-bottom">
         <p class="text-center">Copyright, BlogApp 2022</p>
     </footer>
+    </div>
     {% endblock%}

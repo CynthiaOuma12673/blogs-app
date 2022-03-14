@@ -1,6 +1,8 @@
 from crypt import methods
 from fileinput import filename
+from os import uname
 from turtle import title
+from unittest.util import sorted_list_difference
 from flask import render_template,request,redirect,url_for,abort,flash
 from app import email
 from app.email import mail_message
@@ -20,7 +22,6 @@ def index():
 
     if form.validate_on_submit():
         email = form.email.data
-
         new_subscribe = Subscribe(email = email)
         new_subscribe.save_subscribe()
         mail_message('You have subscribed to blogs app', 'email/subscribe',new_subscribe.email,new_subscribe = new_subscribe)
@@ -33,7 +34,7 @@ def index():
 @main.route('/create_new', methods = ['POST', 'GET'])
 @login_required
 def new_blog():
-    form = BlogForm
+    form = BlogForm()
     if form.validate_on_submit():
         title = form.title.data
         post = form.post.data
@@ -58,7 +59,7 @@ def comment(blog_id):
         return redirect(url_for('.comment', blog_id = blog_id))
     return render_template('comment.html', form = form, blog = blog, comments = comments)
 
-@main.route('/user/uname')
+@main.route('/user/<uname>')
 @login_required
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
@@ -66,7 +67,7 @@ def profile(uname):
     if user is None:
         abort(404)
 
-    return render_template('profile/profilr.html', user = user, posts = posts)
+    return render_template('profile/profile.html', user = user, posts = posts)
 
 @main.route('/user/<uname>/update', methods = ['GET','POST'])
 @login_required
@@ -123,7 +124,7 @@ def update_blog(blog_id):
         blog.post = form.post.data
         db.session.commit()
         flash('Your blog has been updated succesfully')
-        return redirect(url_for('main.indxe', blog_id = blog_id))
+        return redirect(url_for('main.index', blog_id = blog_id))
     elif request.method == 'GET':
         form.title.data = blog.title
         form.post.data = blog.post

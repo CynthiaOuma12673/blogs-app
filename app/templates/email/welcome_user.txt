@@ -1,0 +1,3 @@
+Hello {{user.username}}
+Welcome to Blogs App
+Thank you for signing up, you can go ahead and start adding your blogs  in the app.
