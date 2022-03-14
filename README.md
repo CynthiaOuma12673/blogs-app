@@ -32,7 +32,7 @@ Open Terminal {Ctrl+Alt+T}
 
 git clone https://github.com/CynthiaOuma12673/blogs_app.git
 
-cd News-App
+cd Blogs-App
 
 code . or atom . based on the text editor you have.
 
