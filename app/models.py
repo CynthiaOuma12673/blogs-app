@@ -41,17 +41,16 @@ class Blog(db.Model):
     post = db.Column(db.Text())
     time = db.Column(db.DateTime, default = datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    comment = db.relationship("Comment",backref="pitch",lazy="dynamic")
+    comment = db.relationship("Comment",backref="blog",lazy="dynamic")
 
     def save_blog(self):
         db.session.add(self)
         db.session.commit()
 
-    @classmethod
-    def get_comments(cls,blog_id):
-        comments = Comment.query.filter_by(blog_id).all()
+    def get_blog(id):
+        blog = Blog.query.filter_by(id = id).first()
+        return blog
 
-        return comments
 
     def __repr__(self):
         return f'comment: {self.comment}'

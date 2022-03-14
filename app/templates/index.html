@@ -35,7 +35,7 @@
                     <small>Posted On: {{blog.time.strftime('%Y-%m-%d')}}</small>
                     {% if blog.user == current_user %}
                     <span>
-                        <a href="{{url_for('main.update_blog', blog_id = blog_id)}}">Update Blog</a>
+                        <a href="{{url_for('main.new_blog', blog_id = blog_id)}}">Update Blog</a>
                         <button class="btn btn-danger btn-sm m-1" >Delete</button>
                     </span>
                     {% endif %}
@@ -57,7 +57,7 @@
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <form action="{{ url_for('main.delete_post', pitch_id = pitch.id) }}" method="POST">
+            <form action="{{ url_for('main.delete_post', blog_id = blog.id) }}" method="POST">
                 <input class="btn btn-danger btn-sm" type="submit" value="Delete">
             </form>
             </div>

@@ -45,7 +45,7 @@ def new_blog():
     return render_template('new_blog.html', form = form, title = 'Create Your Blog')
 
 
-@main.route('/comment/<int:blog_id>', methods = ['POST','GET'])
+@main.route('/comment/<blog_id>/comment', methods = ['POST','GET'])
 @login_required
 def comment(blog_id):
     form = CommentForm()
@@ -54,10 +54,11 @@ def comment(blog_id):
     if form.validate_on_submit():
         comment = form.comment.data
         blog_id = blog_id
-        new_comment = Comment(comment = comment, blog_id = blog_id, user = current_user)
+        user_id = current_user._get_current_object().id
+        new_comment = Comment(comment = comment, blog_id = blog_id, use_id = user_id)
         new_comment.save_comment()
         return redirect(url_for('.comment', blog_id = blog_id))
-    return render_template('comment.html', form = form, blog = blog, comments = comments)
+    return render_template('comment.html', form = form, blog = blog, comments = comments, user = current_user)
 
 @main.route('/user/<uname>')
 @login_required
@@ -114,7 +115,7 @@ def delete_comment(comment_id, blog_id):
     flash('Your comment has been successfully deleted')
     return redirect(url_for('.comment', blog_id = blog_id, comment_id = comment_id))
 
-@main.route('/update_post/<int:blog_id>', methods = ['POST','GET'])
+@main.route('/update_post/<blog_id>/update', methods = ['POST','GET'])
 @login_required
 def update_blog(blog_id):
     blog = Blog.query.get(blog_id)
