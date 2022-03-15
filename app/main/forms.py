@@ -1,6 +1,3 @@
-from ast import Str
-from logging import PlaceHolder
-from turtle import title
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField,SelectField
 from wtforms.validators import Email, InputRequired
