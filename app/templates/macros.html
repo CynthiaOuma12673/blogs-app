@@ -11,14 +11,14 @@
                     Created On: {{blog.time.strftime('%Y-%m-%d')}}
                 </small>
                 {% if user == current_user %}
-                <span>
-                    <a href="{{url_for('main.update_blog',blog_id = blog_id)}}">Update Blog</a>
-                    <button class="btn btn-danger btn-sm m-1" >Delete</button>
-                </span>
                 {% endif %}
                 <h4>{{ blog.title }}</h4>
                 <p>{{ blog.post }}</p>
-                <a href="{{url_for('main.comment',blog_id = blog_id)}}"><span><button>{{blog.comment.count}}</button></span>Comments</a>
+                <span>
+                    <a href="{{url_for('main.comment',blog_id = blog.id)}}"><button class="btn btn-info">Comments</button></a>
+                    <a class="btn btn-info" href="{{url_for('main.update_blog', blog_id = blog.id)}}">Update Blog</a>
+                    <a href="{{ url_for('main.delete_post', blog_id = blog.id) }}"><button class="btn btn-danger btn-sm m-1" >Delete</button></a>
+                </span>
             </div>
         </div>
     </article>

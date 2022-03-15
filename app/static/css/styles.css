@@ -1,8 +1,14 @@
+body {
+    background-color: aliceblue;
+}
 .head ul{
     list-style: none;
     display: flex;
     justify-content: space-around;
 }
 .card {
+    align-items: center;
+}
+.col-md-7{
     align-items: center;
 }

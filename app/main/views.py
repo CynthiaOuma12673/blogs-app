@@ -45,7 +45,7 @@ def new_blog():
     return render_template('new_blog.html', form = form, title = 'Create Your Blog')
 
 
-@main.route('/comment/<blog_id>',methods = ['POST', 'GET'])
+@main.route('/comment/<int:blog_id>',methods = ['POST', 'GET'])
 @login_required
 def comment(blog_id):
     form = CommentForm()

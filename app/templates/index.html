@@ -1,3 +1,4 @@
+
 {% extends 'base.html'%}
 {% import 'bootstrap/wtf.html' as wtf %}
 {% import 'macros.html' as macro%}
@@ -9,8 +10,9 @@
     <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 {% endblock %}
 <!-- Content block -->
+
 {% block content %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
     <div class="col-md-9">
     {% for message in get_flashed_messages() %}
@@ -20,28 +22,30 @@
 </div>
     {% endfor %}
 
-    <a class="btn btn-info btn-sm" href="{{url_for('main.new_blog')}}">ADD NEW BLOG</a>
+    <a class="btn btn-info btn-sm" style="align-items: center;margin-bottom: 2rem; margin-left: 10rem;padding: 1rem;" href="{{url_for('main.new_blog')}}">ADD NEW BLOG</a>
+    <br>
     <div class="row posts">
         {% for blog in blogs %}
-        <article class="media">
+        <article class="card">
             {% if blog.user.profile_pic_path %}
             <img class="rounded-circle blog-profile" src="{{url_for('static',filename=blog.user.profile_pic_path)}}" alt="">
             {% else %}
             <img class="rounded-circle blog-profile" src="{{url_for('static', filename='photos/default.png')}}" alt="">
             {% endif %} 
-            <div class="media-body">
+            <div class="card-body">
                 <div class="details">
                     <p>Posted By: {{blog.user.username}}</p>
                     <small>Posted On: {{blog.time.strftime('%Y-%m-%d')}}</small>
                     {% if blog.user == current_user %}
-                    <span>
-                        <a href="{{url_for('main.new_blog', blog_id = blog_id)}}">Update Blog</a>
-                        <button class="btn btn-danger btn-sm m-1" >Delete</button>
-                    </span>
+                    
                     {% endif %}
                     <h4>{{ blog.title }}</h4>
                 <p>{{ blog.post }}</p>
-                <a href="{{url_for('main.comment',blog_id = blog_id)}}"><span><button>{{blog.comment.count}}</button></span>Comments</a>
+                <span>
+                    <a href="{{url_for('main.comment',blog_id = blog.id)}}"><button class="btn btn-info">Comments</button></a>
+                    <a class="btn btn-info" href="{{url_for('main.update_blog', blog_id = blog.id)}}">Update Blog</a>
+                    <a href="{{ url_for('main.delete_post', blog_id = blog.id) }}"><button class="btn btn-danger btn-sm m-1" >Delete</button></a>
+                </span>
                 </div>
             </div>              
         </article>
@@ -81,4 +85,5 @@
         <p class="text-center">Copyright, BlogApp 2022</p>
     </footer>
     </div>
+</div>
     {% endblock%}
