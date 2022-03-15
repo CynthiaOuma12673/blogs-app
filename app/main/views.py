@@ -45,7 +45,7 @@ def new_blog():
     return render_template('new_blog.html', form = form, title = 'Create Your Blog')
 
 
-@main.route('/comment/<blog_id>/comment', methods = ['POST','GET'])
+@main.route('/comment/<blog_id>',methods = ['POST', 'GET'])
 @login_required
 def comment(blog_id):
     form = CommentForm()
@@ -55,10 +55,10 @@ def comment(blog_id):
         comment = form.comment.data
         blog_id = blog_id
         user_id = current_user._get_current_object().id
-        new_comment = Comment(comment = comment, blog_id = blog_id, use_id = user_id)
+        new_comment = Comment(comment = comment, blog_id = blog_id, user_id = user_id)
         new_comment.save_comment()
         return redirect(url_for('.comment', blog_id = blog_id))
-    return render_template('comment.html', form = form, blog = blog, comments = comments, user = current_user)
+    return render_template('comment.html', form = form, blog = blog, comments = comments, user =current_user)
 
 @main.route('/user/<uname>')
 @login_required
