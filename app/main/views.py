@@ -115,7 +115,7 @@ def delete_comment(comment_id, blog_id):
     flash('Your comment has been successfully deleted')
     return redirect(url_for('.comment', blog_id = blog_id, comment_id = comment_id))
 
-@main.route('/update_post/<blog_id>/update', methods = ['POST','GET'])
+@main.route('/update_post/<blog_id>', methods = ['POST','GET'])
 @login_required
 def update_blog(blog_id):
     blog = Blog.query.get(blog_id)
