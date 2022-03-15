@@ -9,7 +9,9 @@
 <div class="container text-center">
     <h3>Sign Up</h3>
     <hr>
-    {{wtf.quick_form(registration_form, button_map={'submit':'info'})}}
+    <div class="card" style="align-items: center; height: 20rem;width: 40rem;margin-left: 18rem;">
+        {{wtf.quick_form(registration_form, button_map={'submit':'info'})}}
+    </div>
     <p>You have an account <a href="{{url_for('auth.login')}}">Login Here</a></p>
 </div>
 <footer class="fixed-bottom">

@@ -10,9 +10,7 @@
 {% block content %}
 <div class="container">
             <h4 class="text-center">My Profile</h4>
-            <div class="media">
-            </div>
-            <div style="align-items: center;">
+            <div class="card" style="margin-bottom: 2rem; padding: 1rem;">
                 <h5>Name: {{ current_user.username }}</h5>
                 <p>Email: {{ current_user.email }}</p>
                 {% if user.bio %}
@@ -29,13 +27,16 @@
                     <input type="submit" class="btn btn-sm btn-info" value="Update Profile Photo">
                 </form>
                 {% endif %}
+                <br>
             </div>
-            <div class="col-md-4">
-                    <h4>My Blogs</h4>
+            <div>
+                    <h4 class="text-center">My Blogs</h4>
+                    <div class="card" style="padding: 1rem;">
                     {% if user == current_user %}
             {%if posts%}
                 {{ macro.display(posts) }}
             {%else%}
+        </div>
             <div class="content-section">
                 You have no blogs 
             </div>
@@ -43,8 +44,6 @@
             {% endif %}
             </div>
         </div>
-    </div>
-</div>
 <footer class="fixed-bottom">
     <p class="text-center">Copyright, BlogApp 2022</p>
 </footer>
